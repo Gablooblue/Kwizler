@@ -1,0 +1,24 @@
+{
+    "name": "Kwizler",
+    "version": "0.1",
+    "description": "Kwizler gives you math questions before you browse social media websites, allowing you to wean yourself off of them while training your math skills",
+    "manifest_version": 2,
+    "content_scripts": [
+	{
+	    "matches": [
+		"<all_urls>"
+	    ],
+	    "js": [ "jquery-3.4.0.js", "content.js" ]
+
+	}
+    ],
+    "background": {
+	"scripts": ["jquery-3.4.0.js", "background.js"],
+	"persistent": false
+    },
+    "permissions": [
+	"tabs",
+	"storage"
+    ]
+
+}
