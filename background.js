@@ -1,10 +1,19 @@
+chrome.storage.sync.clear();
+
+chrome.storage.sync.get("enabled", (data) => {
+    if(Object.keys(data).length <= 0 )
+    {
+        chrome.storage.sync.set({"enabled": true}) 
+    }
+})
+
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
 	if ( request.message === "check_url" )
 	    sendResponse({ url: sender.tab.url })
 	else if (request.message === "block_tab" )
 	{
-	    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+	    chrome.tabs.query({active: true, lastFocusedWindow: true}, function(tabs) {
 		var tab = tabs[0];
 		chrome.tabs.update(tab.id, {url: 'index.html?p='+ request.url});
 	    });

@@ -1,9 +1,59 @@
-<script src = "jquery-3.4.0.js"></script>
-<script src = "index.js"></script>
-<span id = "firstOperand">Loading</span>
-<span id = "operator">Loading</span>
-<span id = "secondOperand">Loading</span>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Answer This Question | Kwizler</title>
+        <link href= "index.css" type= "text/css" rel="stylesheet">
+        <link href = "https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" type="text/css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico"/>
+        
 
-<input type = "number" name= "answer" id = "answerInput" />
-<span id = "result"></span>
-<button id = "submit">Submit Answer</button>
+    </head>
+    <body>
+        <section class="hero is-light is-fullheight">
+            <div class="hero-body">
+            <div class="container has-text-centered">
+                <img src= "images/logo_transparent.png" alt="Kwizler" width="128" height="128">
+                <h1 class="title">Answer This Question</h1>
+                <p class = "subtitle ">To proceed, you must answer this math question</p>
+
+                <div style="padding-bottom:1em;">
+                    <span id = "result" class= "has-text-weight-bold"></span>
+                    <br>
+                    <span id = "instruction"></span>
+
+                </div>
+                <form name="mathForm" action="" id="mathForm" onsubmit= "return false">
+                <div class="field is-horizontal" >
+                    <div class="field-label is-large">
+                    <label class ="label ">
+                        <span id = "firstOperand">Loading</span>
+                        <span id = "operator">Loading</span>
+                        <span id = "secondOperand">Loading</span>
+                       =
+                    </label>
+                        
+                    </div>
+                    <div class="field-body is-half">
+                        <div class="field">
+                            <div class="control">
+                                <input type = "number" name= "answer" id = "answerInput" class="input" placeholder="Answer here" />
+
+                                <p class = "help">Round numbers to two decimal places</p>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <button type="submit" id = "submit" class="button purple">Submit Answer</button>
+                
+                </form>
+            </div>
+            </div>
+        </section>
+        <script src = "jquery-3.4.0.js"></script>
+        <script src = "index.js"></script>
+    </body>
+</html>

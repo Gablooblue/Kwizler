@@ -8,13 +8,23 @@ $(document).ready(() => {
 	if (answerInput == answer)
 	{
 	    $("#result").text("Correct")
+        $("#instruction").text("Redirecting you now")
+        $("#instruction").removeClass("has-text-danger")
+        $("#instruction").addClass("has-text-success")
+        $("#result").removeClass("has-text-danger")
+        $("#result").addClass("has-text-success")
 	    chrome.runtime.sendMessage({message: "unblock"})
 	}
 	else 
 	{
 	    $("#result").text("Wrong")
+        $("#instruction").text("Try again")
+        $("#instruction").removeClass("has-text-success")
+        $("#instruction").addClass("has-text-danger")
+        $("#result").removeClass("has-text-success")
+        $("#result").addClass("has-text-danger")
 	    $("#answerInput").val("")
-	    ({firstOperand, operator, secondOperand, answer} = setValues())
+        //({firstOperand, operator, secondOperand, answer} = setValues())
 	}
     })
 })
@@ -34,7 +44,7 @@ function setValues() {
 
 function generateNumber() 
 {
-    let num = Math.floor(Math.random() * 100)
+    let num = Math.floor(Math.random() * 100) + 1
     return(num)
 }
 
@@ -87,3 +97,6 @@ function roundToTwo(num) {
 }
 
 
+$("#mathForm").submit(function(e) {
+    e.preventDefault();
+});

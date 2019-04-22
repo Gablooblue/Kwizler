@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Options | Kwizler</title>
+        <link href = "https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" type="text/css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico"/>
+        <link href = "index.css" type = "text/css" rel="stylesheet">
+    </head>
+   <body>
+       <section class="section">
+           <div class="container">
+                <img src= "images/logo_transparent.png" alt="Kwizler" width="128" height="128">
+               <h1 class = "title">Options</h1>
+               <div class="field">
+               <div class="control">
+                   <label class="radio">
+                       <input type="radio" name="enable" id="enabledRadioButton" value="1">
+                       Enabled
+                   </label>
+                   <label class="radio">
+                       <input type="radio" name="enable" id="disabledRadioButton" value="0">
+                       Disabled
+                   </label>
+                   <p class = "help">Enables or Disables the chrome extension</p>
+               </div>
+                   
+               </div>
+
+               <div class="field">
+               <button id="submit" class= "button purple" >Submit</button>
+                   
+               </div>
+           </div>
+       </section>
+        <script src = "jquery-3.4.0.js"></script>
+        <script src = "options.js"></script>
+    </body>
+
+</html>
