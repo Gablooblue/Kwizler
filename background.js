@@ -9,14 +9,12 @@ chrome.storage.sync.get("enabled", (data) => {
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
+        chrome.extension.getBackgroundPage().console.log("TEST")
 	if ( request.message === "check_url" )
 	    sendResponse({ url: sender.tab.url })
 	else if (request.message === "block_tab" )
 	{
-	    chrome.tabs.query({active: true, lastFocusedWindow: true}, function(tabs) {
-		var tab = tabs[0];
-		chrome.tabs.update(tab.id, {url: 'index.html?p='+ request.url});
-	    });
+		chrome.tabs.update(sender.tab.id, {url: 'index.html?p='+ request.url});
 	}
 	else if (request.message === "unblock")
 	{

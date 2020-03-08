@@ -1,6 +1,6 @@
 {
     "name": "Kwizler",
-    "version": "0.1",
+    "version": "0.3",
     "description": "Answer math questions before visiting social media sites to help wean you off social media.",
     "manifest_version": 2,
     "content_scripts": [
