@@ -7,32 +7,64 @@
         <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico"/>
         <link href = "index.css" type = "text/css" rel="stylesheet">
     </head>
-   <body>
-       <section class="section">
-           <div class="container">
+    <body>
+        <section class="section">
+            <div class="container">
                 <img src= "images/logo_transparent.png" alt="Kwizler" width="128" height="128">
-               <h1 class = "title">Options</h1>
-               <div class="field">
-               <div class="control">
-                   <label class="radio">
-                       <input type="radio" name="enable" id="enabledRadioButton" value="1">
-                       Enabled
-                   </label>
-                   <label class="radio">
-                       <input type="radio" name="enable" id="disabledRadioButton" value="0">
-                       Disabled
-                   </label>
-                   <p class = "help">Enables or Disables the chrome extension</p>
-               </div>
-                   
-               </div>
+                <h1 class="title">Options</h1>
+                <form id="settings-form">
+                    <div class="field">
+                        <label class="label">Enable extension:</label>
+                        <div class="control">
+                            <label class="radio">
+                                <input type="radio" name="enabled" id="enabled-true" value="true">
+                                Yes
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="enabled" id="enabled-false" value="false">
+                                No
+                            </label>
+                        </div>
+                    </div>
 
-               <div class="field">
-               <button id="submit" class= "button purple" >Submit</button>
-                   
-               </div>
-           </div>
-       </section>
+                    <div class="field">
+                        <label class="label" for="difficulty">Difficulty:</label>
+                        <div class="control">
+                            <div class="select">
+                                <select id="difficulty" name="difficulty">
+                                    <option value="easy">Easy</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="hard">Hard</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label" for="blocked-urls">Blocked URLs:</label>
+                        <div class="control">
+                            <input class="input" type="url" id="add-blocked-url" placeholder="Enter URL">
+                        </div>
+                        <button class="button is-primary" id="add-url-btn">Add</button>
+                        <div id="blocked-urls"></div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label" for="time-interval">Time interval (minutes):</label>
+                        <div class="control">
+                            <input class="input" type="number" id="time-interval" min="1" step="1" name="time-interval">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-link" id="save-btn">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
         <script src = "jquery-3.4.0.js"></script>
         <script src = "options.js"></script>
     </body>
