@@ -1,99 +1,120 @@
 
 $(document).ready(() => {
-    do
-	var {firstOperand, operator, secondOperand, answer} = setValues()
-    while(operator == "/" && secondOperand == 0);
-    $("#submit").click(() => {
-	let answerInput = $("#answerInput").val()
-	if (answerInput == answer)
-	{
-	    $("#result").text("Correct")
-        $("#instruction").text("Redirecting you now")
-        $("#instruction").removeClass("has-text-danger")
-        $("#instruction").addClass("has-text-success")
-        $("#result").removeClass("has-text-danger")
-        $("#result").addClass("has-text-success")
-	    chrome.runtime.sendMessage({message: "unblock"})
-	}
-	else 
-	{
-	    $("#result").text("Wrong")
-        $("#instruction").text("Try again")
-        $("#instruction").removeClass("has-text-success")
-        $("#instruction").addClass("has-text-danger")
-        $("#result").removeClass("has-text-success")
-        $("#result").addClass("has-text-danger")
-	    $("#answerInput").val("")
-        //({firstOperand, operator, secondOperand, answer} = setValues())
-	}
-    })
+    main()
 })
 
-function setValues() {
-    let firstOperand = generateNumber()
-    let secondOperand = generateNumber()
-    let operator = generateOperator()
 
-    $("#firstOperand").text(firstOperand.toString())
-    $("#secondOperand").text(secondOperand.toString())
-    $("#operator").text(operator.toString())
+function generateMathQuestion(difficulty) {
+    const operations = ['+', '-', '*', '/'];
+    let min, max;
 
-    let answer = generateAnswer(firstOperand, operator, secondOperand)
-    return { firstOperand, operator, secondOperand, answer }
+    switch (difficulty) {
+        case 'easy':
+            min = 1;
+            max = 10;
+            break;
+        case 'medium':
+            min = 10;
+            max = 50;
+            break;
+        case 'hard':
+            min = 50;
+            max = 100;
+            break;
+        default:
+            throw new Error('Invalid difficulty level. Please choose "easy", "medium", or "hard".');
+    }
+
+    const firstOperand = Math.floor(Math.random() * (max - min + 1)) + min;
+    let secondOperand = Math.floor(Math.random() * (max - min + 1)) + min;
+    const operationIndex = Math.floor(Math.random() * operations.length);
+    const operation = operations[operationIndex];
+
+    // Ensure the division results in one of the specified decimal points
+    if (operation === '/') {
+        const possibleFractions = [
+            { numerator: 1, denominator: 4 },
+            { numerator: 1, denominator: 2 },
+            { numerator: 3, denominator: 4 },
+            { numerator: 1, denominator: 3 },
+            { numerator: 2, denominator: 3 },
+            { numerator: 1, denominator: 1 }
+        ];
+        const selectedFraction = possibleFractions[Math.floor(Math.random() * possibleFractions.length)];
+        secondOperand = firstOperand * selectedFraction.denominator / selectedFraction.numerator;
+    }
+
+
+
+    let answer = calculateAnswer(firstOperand, secondOperand, operation)
+    answer = roundToTwo(answer)
+
+
+    return { firstOperand, operation, secondOperand, answer }
 }
 
-function generateNumber() 
-{
-    let num = Math.floor(Math.random() * 100) + 1
-    return(num)
-}
-
-function generateOperator() 
-{
-    let odds = Math.random()
-    if( odds <= 0.25 ) 
-    {
-	operator = "+"
+function calculateAnswer(num1, num2, operation) {
+    switch (operation) {
+        case '+':
+            return num1 + num2;
+        case '-':
+            return num1 - num2;
+        case '*':
+            return num1 * num2;
+        case '/':
+            return num1 / num2;
+        default:
+            throw new Error('Invalid operation.');
     }
-    else if ( odds <= 0.5 )
-    {
-	operator = "-"
-    }
-    else if ( odds <= 0.75 )
-    {
-	operator = "*"
-    }
-    else
-    {
-	operator = "/"
-    }
-    return operator;
-}
-
-function generateAnswer(firstOperand, operator, secondOperand)
-{
-    let result;
-    if(operator == "+")
-    {
-	result = firstOperand + secondOperand	
-    }
-    else if (operator == "-")
-    {
-	result = firstOperand - secondOperand
-    }
-    else if (operator == "*")
-    {
-	result = firstOperand * secondOperand
-    }
-    else
-    {
-	result = firstOperand / secondOperand
-    }
-    return roundToTwo(result);
 }
 
 function roundToTwo(num) {    
     return +(Math.round(num + "e+2")  + "e-2");
+}
+
+function getDifficulty() {
+    return new Promise((resolve) => {
+        chrome.storage.sync.get(['difficulty'], ({ difficulty }) => {
+            resolve(difficulty);
+        });
+    });
+}
+
+async function main() {
+    const difficulty = await getDifficulty();
+
+    var {firstOperand, operation, secondOperand, answer} = generateMathQuestion(difficulty)
+    console.table(firstOperand, operation, secondOperand, answer)
+
+    $("#firstOperand").text(firstOperand.toString())
+    $("#secondOperand").text(secondOperand.toString())
+    $("#operation").text(operation.toString())
+
+    $("#submit").click(() => {
+        let answerInput = $("#answerInput").val()
+        if (answerInput == answer)
+        {
+            $("#result").text("Correct")
+            $("#instruction").text("Redirecting you now")
+            $("#instruction").removeClass("has-text-danger")
+            $("#instruction").addClass("has-text-success")
+            $("#result").removeClass("has-text-danger")
+            $("#result").addClass("has-text-success")
+            chrome.runtime.sendMessage({message: "unblock"})
+        }
+        else 
+        {
+            $("#result").text("Wrong")
+            $("#instruction").text("Try again")
+            $("#instruction").removeClass("has-text-success")
+            $("#instruction").addClass("has-text-danger")
+            $("#result").removeClass("has-text-success")
+            $("#result").addClass("has-text-danger")
+            $("#answerInput").val("")
+            //({firstOperand, operation, secondOperand, answer} = setValues())
+        }
+    })
+
 }
 
 

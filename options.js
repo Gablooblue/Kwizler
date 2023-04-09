@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         settings.hasOwnProperty('enabled') ? (settings.enabled ? enabledTrue.checked = true : enabledFalse.checked = true) : enabledTrue.checked = true;
         difficulty.value = settings.difficulty || 'medium';
         renderBlockedUrls(settings.blockedUrls || []);
-        timeInterval.value = settings.timeInterval || 5;
+        timeInterval.value = settings.timeInterval || 60;
     });
 
 
